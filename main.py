@@ -33,7 +33,7 @@ def search_for_artist(artist_name, artist_list):
 
 def add_artists(artist_list, artist_name, artist_songs, artist_performance_duration):
     if search_for_artist(artist_name, artist_list) is None:
-        artist_list.append(dict(name = artist_name, songs = artist_songs, performance_time = artist_performance_duration))
+        artist_list.append(dict(name = artist_name, songs = artist_songs, performance_duration = artist_performance_duration))
         print("You have successfully added the artist to the list.")
     else:
         print("The artist is already inside the list")
