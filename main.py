@@ -1,5 +1,72 @@
 #Max Holdaway, Daniel Blanco, Avery Bowman, Aiden Challenger :D
 
+#Max's Section
+import random
+
+#Getting all the lists for the artists in venues 1 and 2 as well as the artist lineup
+list_of_artist_venue_1 = []
+list_of_artist_venue_2 = []
+artist_lineup = []
+
+artists = [list_of_artist_venue_1, list_of_artist_venue_2]
+
+#Function for checking if user is an admin
+def admin_checker():
+    admin_status = False
+    while True:
+        user_decision = str(input("Do you want to try to login to admin or exit? (type admin for login, and exit for exiting): "))
+        if user_decision.lower() == "admin":
+            password_checker = str(input("Please enter password for admin: "))
+            if password_checker == "Placeholder":
+                print("That is the correct password welcome admin.")
+                admin_status = True
+                return admin_status
+            else:
+                print("That is the wrong password please try again.")
+                admin_status = False
+                return admin_status
+        
+        elif user_decision.lower() == "exit":
+            print("Admin login is exiting.")
+            return admin_status
+
+#Function for searching for an artist
+def search_for_artist(artist_name, artist_list):
+    for index, artist_record in enumerate(artist_list):
+        if artist_record["name"] == artist_name:
+            return index
+
+#Function for adding an artist with all their information
+def add_artists(artist_list, artist_name, artist_genre, artist_performance_duration):
+    if search_for_artist(artist_name, artist_list) is None:
+        artist_list.append(dict(name = artist_name, genre = artist_genre, performance_duration = artist_performance_duration))
+        print("You have successfully added the artist to the list.")
+    else:
+        print("The artist is already inside the list")
+    return artist_list
+
+#Function for removing artists
+def remove_artist(artist_list, artist_name):
+    index = search_for_artist(artist_list, artist_name)
+    if index is not None:
+        artist_list.pop(index)
+        print("You have succesfully removed the artist from the list.")
+    else:
+        print("The artist you are trying to remove does not exist.")
+
+#Function for updating artist information
+def update_artist_info(artist_list, artist_name, artist_genre=None, artist_performance_duration=None):
+    index = search_for_artist(artist_list, artist_name)
+    if index is not None:
+        artist_record = artist_list[index]
+        if artist_genre is not None:
+            artist_record["genre"] = artist_genre
+        if artist_performance_duration is not None:
+            artist_record["performance_time"] = artist_performance_duration
+    elif index is None:
+        print("The artist you were trying to update does not exist.")
+    return artist_list
+
 # Avery music festival
 
 from datetime import datetime, timedelta
@@ -79,74 +146,6 @@ print("-" * 80)
 for entry in festival_schedule:
     print(f"{entry[0]:<10} {entry[1]:<10} {entry[2]:<10} {entry[3]:<15} {entry[4]:<15} {entry[5]}")
 
-
-
-
-#Max's Section
-import random
-
-#Getting all the lists for the artists in venues 1 and 2 as well as the artist lineup
-list_of_artist_venue_1 = []
-list_of_artist_venue_2 = []
-artist_lineup = []
-
-#Function for checking if user is an admin
-def admin_checker():
-    admin_status = False
-    while True:
-        user_decision = str(input("Do you want to try to login to admin or exit? (type admin for login, and exit for exiting): "))
-        if user_decision.lower() == "admin":
-            password_checker = str(input("Please enter password for admin: "))
-            if password_checker == "Placeholder":
-                print("That is the correct password welcome admin.")
-                admin_status = True
-                return admin_status
-            else:
-                print("That is the wrong password please try again.")
-                admin_status = False
-                return admin_status
-        
-        elif user_decision.lower() == "exit":
-            print("Admin login is exiting.")
-            return admin_status
-
-#Function for searching for an artist
-def search_for_artist(artist_name, artist_list):
-    for index, artist_record in enumerate(artist_list):
-        if artist_record["name"] == artist_name:
-            return index
-
-#Function for adding an artist with all their information
-def add_artists(artist_list, artist_name, artist_genre, artist_performance_duration):
-    if search_for_artist(artist_name, artist_list) is None:
-        artist_list.append(dict(name = artist_name, genre = artist_genre, performance_duration = artist_performance_duration))
-        print("You have successfully added the artist to the list.")
-    else:
-        print("The artist is already inside the list")
-    return artist_list
-
-#Function for removing artists
-def remove_artist(artist_list, artist_name):
-    index = search_for_artist(artist_list, artist_name)
-    if index is not None:
-        artist_list.pop(index)
-        print("You have succesfully removed the artist from the list.")
-    else:
-        print("The artist you are trying to remove does not exist.")
-
-#Function for updating artist information
-def update_artist_info(artist_list, artist_name, artist_genre=None, artist_performance_duration=None):
-    index = search_for_artist(artist_list, artist_name)
-    if index is not None:
-        artist_record = artist_list[index]
-        if artist_genre is not None:
-            artist_record["genre"] = artist_genre
-        if artist_performance_duration is not None:
-            artist_record["performance_time"] = artist_performance_duration
-    elif index is None:
-        print("The artist you were trying to update does not exist.")
-    return artist_list
-
-#Unfinished function for lineup
+#(This is part of Max's section) Unfinished function for lineup
 def artist_lineup(artist_list, time_schedule):
     pass
