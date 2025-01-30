@@ -85,10 +85,12 @@ for entry in festival_schedule:
 #Max's Section
 import random
 
+#Getting all the lists for the artists in venues 1 and 2 as well as the artist lineup
 list_of_artist_venue_1 = []
 list_of_artist_venue_2 = []
 artist_lineup = []
 
+#Function for checking if user is an admin
 def admin_checker():
     admin_status = False
     while True:
@@ -108,11 +110,13 @@ def admin_checker():
             print("Admin login is exiting.")
             return admin_status
 
+#Function for searching for an artist
 def search_for_artist(artist_name, artist_list):
     for index, artist_record in enumerate(artist_list):
         if artist_record["name"] == artist_name:
             return index
 
+#Function for adding an artist with all their information
 def add_artists(artist_list, artist_name, artist_genre, artist_performance_duration):
     if search_for_artist(artist_name, artist_list) is None:
         artist_list.append(dict(name = artist_name, genre = artist_genre, performance_duration = artist_performance_duration))
@@ -121,6 +125,7 @@ def add_artists(artist_list, artist_name, artist_genre, artist_performance_durat
         print("The artist is already inside the list")
     return artist_list
 
+#Function for removing artists
 def remove_artist(artist_list, artist_name):
     index = search_for_artist(artist_list, artist_name)
     if index is not None:
@@ -129,6 +134,7 @@ def remove_artist(artist_list, artist_name):
     else:
         print("The artist you are trying to remove does not exist.")
 
+#Function for updating artist information
 def update_artist_info(artist_list, artist_name, artist_genre=None, artist_performance_duration=None):
     index = search_for_artist(artist_list, artist_name)
     if index is not None:
@@ -141,5 +147,6 @@ def update_artist_info(artist_list, artist_name, artist_genre=None, artist_perfo
         print("The artist you were trying to update does not exist.")
     return artist_list
 
+#Unfinished function for lineup
 def artist_lineup(artist_list, time_schedule):
     pass
