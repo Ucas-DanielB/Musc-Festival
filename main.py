@@ -113,9 +113,9 @@ def search_for_artist(artist_name, artist_list):
         if artist_record["name"] == artist_name:
             return index
 
-def add_artists(artist_list, artist_name, artist_songs, artist_performance_duration):
+def add_artists(artist_list, artist_name, artist_genre, artist_performance_duration):
     if search_for_artist(artist_name, artist_list) is None:
-        artist_list.append(dict(name = artist_name, songs = artist_songs, performance_duration = artist_performance_duration))
+        artist_list.append(dict(name = artist_name, genre = artist_genre, performance_duration = artist_performance_duration))
         print("You have successfully added the artist to the list.")
     else:
         print("The artist is already inside the list")
@@ -129,12 +129,12 @@ def remove_artist(artist_list, artist_name):
     else:
         print("The artist you are trying to remove does not exist.")
 
-def update_artist_info(artist_list, artist_name, artist_songs=None, artist_performance_duration=None):
+def update_artist_info(artist_list, artist_name, artist_genre=None, artist_performance_duration=None):
     index = search_for_artist(artist_list, artist_name)
     if index is not None:
         artist_record = artist_list[index]
-        if artist_songs is not None:
-            artist_record["songs"] = artist_songs
+        if artist_genre is not None:
+            artist_record["genre"] = artist_genre
         if artist_performance_duration is not None:
             artist_record["performance_time"] = artist_performance_duration
     elif index is None:
