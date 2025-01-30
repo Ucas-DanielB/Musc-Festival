@@ -4,76 +4,93 @@
 
 #define sets for venue mangment
 #not all need to be sets 
-venue_names = {}
-stage_names = {}  #job 1  hit up avery
 
-artist_name= () #take infor from job 1
-
-equipment_names={} 
+venue_names = set()  
+stage_info = {} {stage_name: location}
+equipment_lists = {}  : {stage_name: set(equipment)}
 
 
 #defining future functions 
-def add_things(): #get better naming skills idiot
-  venue_names
-  
-  #assign location to venue
+def add_venue(): 
+  venue=input("What would you like the new venue to be named: ").strip()
+  #check if it exists already
+  venue_names.append(venue)
+  #won't work fix
+  print(f'Added {venue_names}")
   
 
+  #adding equipment
+def add_equipment():
+    stage = input("Enter stage name: ").strip()
+    if stage not in stage_info:
+        print("Stage does not exist. Add the stage first.")
+        return
+    equipment = input("Enter equipment name: ").strip()
+    if stage not in equipment_lists:
+        equipment_lists[stage] = set()
+    equipment_lists[stage].add(equipment)
+    print(f"Added {equipment} to {stage}.")
 
-def equipment():
-  
+ 
+#adding stages
+def add_stage():
+    stage = input("Enter stage name: ").strip()
+    location = input("Enter stage location: ").strip()
+    if stage in stage_info:
+        print("Stage already exists.")
+    else:
+        stage_info[stage] = location
+        print(f"Added stage '{stage}' at '{location}'.")
+
 
   #view venue function 
   def view_venue(): #please take info and ask for vari names
-    #take info from job one 
-    #ask user what venue they want to choose
+     if not venue_names:
+        print("No venues added yet.")
+    else:
+        print("Venues:")
+        for venue in venue_names:
+            print(f"- {venue}")
+
 
 #edit venue function 
 def edit_venue():
-  print("1. add to venue")#DUMB WHAT DOES ADD ENTAIL
-  print("2. Remove from venue")#same thing
-  print("3. 
-  edit_choice =int(input("what do you want to do")
-
-
-
+  view_venues()
+  print("1. Rename venue")
+  print("2. Remove venue")
+  choice = input("Choose an option (1/2): ")
+    
+  if choice == "1":
+     new_name = input("Enter new venue name: ").strip().lower()
+     venue_names.remove(venue)
+     venue_names.add(new_name)
+       print(f"Venue renamed to {new_name}")
+     elif choice == "2":
+      venue_names.remove(venue)
+        print(f"Venue '{venue}' removed.")
 
 #venue function(display) 
 def venue_menu():
   print("please pick something")
   print("1. view venues") #display with schedules for each venue 
   print("2. edit venues")#admin only
-  print("3. Equipment lists")#prob admin only
-  print("4. return") 
-  #yn's have ought to add something but they forgor
+  print("3. Add stages")
+  print("4. remove stages")
+  print("5. Equipment lists")#prob admin only
+  print("6. return") 
   venue_choice=int(input("what do you wish to use"))
   if venue_choice== 1:
       view_venue()
-      pass
   if venue_choice== 2:
       edit_venue()
-      pass
   if venue_choice== 3:
-    equipment()
-    pass
+    add_stage()
   if venue_choice== 4:
-    continue
-
-
-
- 
-  
-
-
-
-
-
-
-
-
-
-
-
+    add_stage()
+  if venue_choice== 5:
+    add_equipment()
+  if venue_choice== 6:
+    return
 
 
 
@@ -92,16 +109,16 @@ def main():
     if choice== 1:
       #placeholder for artist functions
       pass
-    if choice== 2:
+    elif choice== 2:
       #place holder for schedule functions
       pass
-    if choice== 3:
+    elif choice== 3:
       #placeholder for venue functions
       pass
-    if choice== 4:
+    elif choice== 4:
       #placeholder for ticket function 
       pass
-    if choice== 5:
+    elif choice== 5:
       break 
 
 if __name__ == "__main__"
