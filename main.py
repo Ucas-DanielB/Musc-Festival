@@ -141,5 +141,5 @@ def update_artist_info(artist_list, artist_name, artist_songs=None, artist_perfo
         print("The artist you were trying to update does not exist.")
     return artist_list
 
-def artist_lineup(artist_list, time_slots):
+def artist_lineup(artist_list, time_schedule):
     pass
