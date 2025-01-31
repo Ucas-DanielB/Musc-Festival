@@ -339,7 +339,7 @@ for venue in venues:
        print(f"{day:<10} {time.strftime('%I:%M %p'):<10} {venue:<10} {artist:<15} {genre}")
 
 
-
+#(Part of Max's Section) Function for making artist lineup
 def artist_lineup(artist_lineup):
     #Printing schedule to use for lineup
     print("\nFinal Festival Schedule:")
@@ -348,9 +348,12 @@ def artist_lineup(artist_lineup):
     for venue in venues:
         for day, time, (artist, genre) in sorted(venues[venue], key=lambda x: (days.index(x[0]), x[1])):
             print(f"{day:<10} {time.strftime('%I:%M %p'):<10} {venue:<10} {artist:<15} {genre}")
-    #Making the lineup
-    print("The starting time is 10:00 AM.")
+    
+    #Giving clarifications to the user for making lineup
+    print("The starting time is 10:00 AM and the ending time is 10:00 PM.")
     print("If there is not an artist in a specific time slot put TBD.")
+
+    #Getting artists in lineup for first three days in venue 1
     first_artist_day_1_venue_1 = str(input("Who is the artist going first on day one, venue 1?: "))
     first_artist_day_2_venue_1 = str(input("Who is the artist going first on day two, venue 1?: "))
     first_artist_day_3_venue_1 = str(input("Who is the artist going first on day three, venue 1?: "))
@@ -370,6 +373,7 @@ def artist_lineup(artist_lineup):
     sixth_artist_day_2_venue_1 = str(input("Who is the artist going sixth on day two, venue 1?: "))
     sixth_artist_day_3_venue_1 = str(input("Who is the artist going sixth on day three, venue 1?: "))
 
+    #Getting artists in lineup for first three days in venue 2
     first_artist_day_1_venue_2 = str(input("Who is the artist going first on day one, venue 2?: "))
     first_artist_day_2_venue_2 = str(input("Who is the artist going first on day two, venue 2?: "))
     first_artist_day_3_venue_2 = str(input("Who is the artist going first on day three, venue 2?: "))
@@ -389,5 +393,6 @@ def artist_lineup(artist_lineup):
     sixth_artist_day_2_venue_2 = str(input("Who is the artist going sixth on day two, venue 2?: "))
     sixth_artist_day_3_venue_2 = str(input("Who is the artist going sixth on day three, venue 2?: "))
 
+    #Putting all the artists in a list to make the actual lineup
     artist_lineup = (f"{first_artist_day_1_venue_1} this is the first artist appearing on day one for venue 1\n", f"{second_artist_day_1_venue_1} this is the second artist appearing on day one for venue 1\n", f"{third_artist_day_1_venue_1} this is the third artist appearing on day one for venue 1\n", f"{fourth_artist_day_1_venue_1} this is the fourth artist appearing on day one for venue 1\n", f"{fifth_artist_day_1_venue_1} this is the fifth artist appearing on day one for venue 1\n", f"{sixth_artist_day_1_venue_1} this is the sixth/last artist appearing on day one for venue 1\n", f"{first_artist_day_2_venue_1} this is the first artist appearing on day two for venue 1\n", f"{second_artist_day_2_venue_1} this is the second artist appearing on day two for venue 1\n", f"{third_artist_day_2_venue_1} this is the third artist appearing on day two for venue 1\n", f"{fourth_artist_day_2_venue_1} this is the fourth artist appearing on day two for venue 1\n", f"{fifth_artist_day_2_venue_1} this is the fifth artist appearing on day two for venue 1\n", f"{sixth_artist_day_2_venue_1} this is the sixth/last artist appearing on day two for venue 1\n", f"{first_artist_day_3_venue_1} this is the first artist appearing on day three for venue 1\n", f"{second_artist_day_3_venue_1} this is the second artist appearing on day three for venue 1\n", f"{third_artist_day_3_venue_1} this is the third artist appearing on day three for venue 1\n", f"{fourth_artist_day_3_venue_1} this is the fourth artist appearing on day three for venue 1\n", f"{fifth_artist_day_3_venue_1} this is the fifth artist appearing on day three for venue 1\n", f"{sixth_artist_day_3_venue_1} this is the sixth/last artist appearing on day three for venue 1\n", f"{first_artist_day_1_venue_2} this is the first artist appearing on day one for venue 2\n", f"{second_artist_day_1_venue_2} this is the second artist appearing on day one for venue 2\n", f"{third_artist_day_1_venue_2} this is the third artist appearing on day one for venue 2\n", f"{fourth_artist_day_1_venue_2} this is the fourth artist appearing on day one for venue 2\n", f"{fifth_artist_day_1_venue_2} this is the fifth artist appearing on day one for venue 2\n", f"{sixth_artist_day_1_venue_2} this is the sixth/last artist appearing on day one for venue 2\n", f"{first_artist_day_2_venue_2} this is the first artist appearing on day two for venue 2\n", f"{second_artist_day_2_venue_2} this is the second artist appearing on day two for venue 2\n", f"{third_artist_day_2_venue_2} this is the third artist appearing on day two for venue 2\n", f"{fourth_artist_day_2_venue_2} this is the fourth artist appearing on day two for venue 2\n", f"{fifth_artist_day_2_venue_2} this is the fifth artist appearing on day two for venue 2\n", f"{sixth_artist_day_2_venue_2} this is the sixth/last artist appearing on day two for venue 2\n", f"{first_artist_day_3_venue_2} this is the first artist appearing on day three for venue 2\n", f"{second_artist_day_3_venue_2} this is the second artist appearing on day three for venue 2\n", f"{third_artist_day_3_venue_2} this is the third artist appearing on day three for venue 2\n", f"{fourth_artist_day_3_venue_2} this is the fourth artist appearing on day three for venue 2\n", f"{fifth_artist_day_3_venue_2} this is the fifth artist appearing on day three for venue 2\n", f"{sixth_artist_day_3_venue_2} this is the sixth/last artist appearing on day three for venue 2\n")
     return artist_lineup
