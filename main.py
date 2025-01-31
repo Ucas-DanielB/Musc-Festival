@@ -6,22 +6,7 @@
 venue_names = set() 
 stage_info = {}  
 equipment_lists = {}  
-artist_schedules = {
-    "Venue 1": {
-        "Stage A": {
-            "Artist 1": {"time": "Day 1 at 10:00 AM", "genre": "Rock", "duration": "2 hours"},
-            "Artist 2": {"time": "Day 1 at 12:00 PM", "genre": "Pop", "duration": "1.5 hours"}
-        },
-        "Stage B": {
-            "Artist 3": {"time": "Day 2 at 02:00 PM", "genre": "Jazz", "duration": "1 hour"}
-        }
-    },
-    "Venue 2": {
-        "Stage X": {
-            "Artist 4": {"time": "Day 3 at 04:00 PM", "genre": "Hip-Hop", "duration": "2 hours"}
-        }
-    }
-}
+artist_schedules = {}  
 
 # adding venue 
 def add_venue():
@@ -61,7 +46,7 @@ def add_stage():
         artist_schedules[venue][stage] = {}
         print(f"Added stage '{stage}' at '{location}' in '{venue}'.")
 
-# viewing functions 
+# viewing venue  functions 
 def view_venue():
     if not venue_names:
         print("No venues added yet.")
@@ -167,36 +152,36 @@ def view_equipment():
 # assigning artissts to diffrent days
 def assign_artist():
     if not admin_checker():
-        print("Admin access required")
+        print("Admin access required.")
         return
+    
     view_venue()
     venue = input("Enter the venue: ").strip()
     if venue not in venue_names:
-        print("Venue does not exist")
+        print("Venue does not exist.")
         return
+    
     stage = input("Enter stage name: ").strip()
     if stage not in stage_info[venue]:
-        print("Stage does not exist")
+        print("Stage does not exist.")
         return
+    
     artist = input("Enter artist name: ").strip()
-    genre = input("Enter artist genre: ").strip()
-    duration = input("Enter performance duration (e.g., 2 hours): ").strip()
     day = input("Enter day (Day 1, Day 2, Day 3): ").strip()
     time = input("Enter time (e.g., 10:00 AM): ").strip()
+    
     if day not in ["Day 1", "Day 2", "Day 3"]:
         print("Invalid day.")
         return
+    
     try:
         datetime.strptime(time, "%I:%M %p")
     except ValueError:
-        print("Invalid time format. Use")#fill this 
+        print("Invalid time format. Use HH:MM AM/PM format.")
         return
-    artist_schedules[venue][stage][artist] = {
-        "time": f"{day} at {time}",
-        "genre": genre,
-        "duration": duration
-    }
-    print(f"Assigned {artist} ({genre}) to {stage} in {venue} on {day} at {time}.")
+    
+    artist_schedules[venue][stage][artist] = f"{day} at {time}"
+    print(f"Assigned {artist} to {stage} in {venue} on {day} at {time}.")
 
 # Venue menu function
 def venue_menu():
