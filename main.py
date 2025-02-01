@@ -20,18 +20,22 @@ def artist_menu(artist_list):
         print("5. Return to main menu")
         venue_choice = int(input("What do you wish to use (1-5): "))
         if venue_choice == 1:
-            search_for_artist(artist_name_added, artist_list)
+            artist_name_added = str(input("Type the name for the artist you are searching for: "))
+            search_for_artist_info(artist_name_added, artist_list)
         elif venue_choice == 2:
             artist_name_added = str(input("Type the name for the artist you will be adding: "))
             artist_genre_added = str(input("Type the name of the genre for this artist: "))
             artist_performance_duration_added = str(input("Just type 'Two Hours' here: "))
-            add_artists(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
+            artist_list = add_artists(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
         elif venue_choice == 3:
-            remove_artist(artist_list, artist_name_added)
+            artist_name_added = str(input("Type the name for the artist you will be removing: "))
+            artist_list = remove_artist(artist_list, artist_name_added)
         elif venue_choice == 4:
-            update_artist_info(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
+            artist_name_added = str(input("Type the name for the artist you will be updating information for: "))
+            artist_genre_added = str(input("Please give the artist genre you want to replace: "))
+            artist_list = update_artist_info(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
         elif venue_choice == 5:
-            return
+            return artist_list
         else:
             print("Invalid choice")
 
@@ -235,7 +239,7 @@ def venue_menu():
             print("Invalid choice")
 
 # main function/ menu selection 
-def main(artist_lineup):
+def main(artist_list, artist_lineup):
     while True:
         print("\nWelcome to our music festival!")
         print("1. Open venue menu")
@@ -247,13 +251,13 @@ def main(artist_lineup):
         if choice == 1:
             venue_menu()
         elif choice == 2:
-            artist_menu()
+            artist_list = artist_menu(artist_list)
         elif choice == 3:
             schedule_menu()
         elif choice == 4:
             ticket_main()
         elif choice == 5:
-            artist_lineup(artist_lineup)
+            artist_lineup_function(artist_lineup)
         elif choice == 6:
             break
         else:
@@ -271,7 +275,10 @@ def schedule_menu():
         if venue_choice == 1:
             final_schedule()
         elif venue_choice == 2:
-            schedule_artist()
+            list_of_artist_for_scheduler = []
+            list_of_artist_for_scheduler = take_artist_info(list_of_artists, list_of_artist_for_scheduler)
+            print(f"list_of_artist_for_scheduler: {list_of_artist_for_scheduler}")
+            schedule_artist(list_of_artist_for_scheduler)
             scheduling_process()
         elif venue_choice == 3:
             return
@@ -423,15 +430,24 @@ def admin_checker():
             print("Admin login is exiting.")
             return admin_status
 
-#Function for searching for an artist
-def search_for_artist(artist_name, artist_list):
+#Function for searching for an artists index
+def search_for_artist_index(artist_name, artist_list):
+    print(f"search for artist index before: {artist_list}")
     for index, artist_record in enumerate(artist_list):
         if artist_record["name"] == artist_name:
             return index
 
+#Function for finding artist info
+def search_for_artist_info(artist_name, artist_list):
+    artist_index = search_for_artist_index(artist_name, artist_list)
+    if artist_index is not None:
+        print(f"Here is the artist {artist_list[artist_index]}.")
+    else:
+        print("The artist you were looking for could not be found.")
+
 #Function for adding an artist with all their information
 def add_artists(artist_list, artist_name, artist_genre, artist_performance_duration):
-    if search_for_artist(artist_name, artist_list) is None:
+    if search_for_artist_index(artist_name, artist_list) is None:
         artist_list.append(dict(name = artist_name, genre = artist_genre, performance_duration = artist_performance_duration))
         print("You have successfully added the artist to the list.")
     else:
@@ -440,7 +456,7 @@ def add_artists(artist_list, artist_name, artist_genre, artist_performance_durat
 
 #Function for removing artists
 def remove_artist(artist_list, artist_name):
-    index = search_for_artist(artist_list, artist_name)
+    index = search_for_artist_index(artist_name, artist_list)
     if index is not None:
         artist_list.pop(index)
         print("You have succesfully removed the artist from the list.")
@@ -449,7 +465,7 @@ def remove_artist(artist_list, artist_name):
 
 #Function for updating artist information
 def update_artist_info(artist_list, artist_name, artist_genre=None, artist_performance_duration=None):
-    index = search_for_artist(artist_list, artist_name)
+    index = search_for_artist_index(artist_name, artist_list)
     if index is not None:
         artist_record = artist_list[index]
         if artist_genre is not None:
@@ -463,16 +479,13 @@ def update_artist_info(artist_list, artist_name, artist_genre=None, artist_perfo
 #Function for taking information from my artist list and making it into a list that the scheduler can use
 def take_artist_info(list_of_artists, list_of_artists_schedule):
     for artist_record in list_of_artists:
-        list_of_artists_schedule.append(artist_record["name"])
-        list_of_artists_schedule.append(artist_record["genre"])
-        return list_of_artists_schedule
+        list_of_artists_schedule.append((artist_record["name"], artist_record["genre"]))
+        print(list_of_artists_schedule)
+    return list_of_artists_schedule
 
 # Avery music festival
 
 from datetime import datetime, timedelta
-
-# List of 36 artists
-list_of_artist_for_scheduler = take_artist_info(list_of_artists, list_of_artist_for_scheduler)
 
 # Festival details
 days = ["Day 1", "Day 2", "Day 3"]
@@ -492,8 +505,9 @@ def available_slots(day, venue):
 
 
 # Function to display unscheduled artists
-def display_unscheduled_artists():
+def display_unscheduled_artists(list_of_artist_for_scheduler):
    scheduled_artists = {artist for venue in venues.values() for _, _, (artist, _) in venue}
+   print(list_of_artist_for_scheduler)
    unscheduled = [artist for artist in list_of_artist_for_scheduler if artist[0] not in scheduled_artists]
 
 
@@ -509,7 +523,7 @@ def display_unscheduled_artists():
 
 
 # Function to schedule an artist
-def schedule_artist():
+def schedule_artist(list_of_artist_for_scheduler):
    while True:
        print("\nAvailable time slots:")
        for day in days:
@@ -520,7 +534,7 @@ def schedule_artist():
 
 
        # Display unscheduled artists
-       unscheduled = display_unscheduled_artists()
+       unscheduled = display_unscheduled_artists(list_of_artist_for_scheduler)
        if not unscheduled:
            break
 
@@ -614,7 +628,7 @@ def final_schedule():
 
 
 #(Part of Max's Section) Function for making artist lineup
-def artist_lineup(artist_lineup):
+def artist_lineup_function(artist_lineup):
     #Printing schedule to use for lineup
     print("\nFinal Festival Schedule:")
     print(f"{'Day':<10} {'Time':<10} {'Venue':<10} {'Artist':<15} {'Genre'}")
@@ -671,4 +685,4 @@ def artist_lineup(artist_lineup):
     artist_lineup = (f"{first_artist_day_1_venue_1} this is the first artist appearing on day one for venue 1\n", f"{second_artist_day_1_venue_1} this is the second artist appearing on day one for venue 1\n", f"{third_artist_day_1_venue_1} this is the third artist appearing on day one for venue 1\n", f"{fourth_artist_day_1_venue_1} this is the fourth artist appearing on day one for venue 1\n", f"{fifth_artist_day_1_venue_1} this is the fifth artist appearing on day one for venue 1\n", f"{sixth_artist_day_1_venue_1} this is the sixth/last artist appearing on day one for venue 1\n", f"{first_artist_day_2_venue_1} this is the first artist appearing on day two for venue 1\n", f"{second_artist_day_2_venue_1} this is the second artist appearing on day two for venue 1\n", f"{third_artist_day_2_venue_1} this is the third artist appearing on day two for venue 1\n", f"{fourth_artist_day_2_venue_1} this is the fourth artist appearing on day two for venue 1\n", f"{fifth_artist_day_2_venue_1} this is the fifth artist appearing on day two for venue 1\n", f"{sixth_artist_day_2_venue_1} this is the sixth/last artist appearing on day two for venue 1\n", f"{first_artist_day_3_venue_1} this is the first artist appearing on day three for venue 1\n", f"{second_artist_day_3_venue_1} this is the second artist appearing on day three for venue 1\n", f"{third_artist_day_3_venue_1} this is the third artist appearing on day three for venue 1\n", f"{fourth_artist_day_3_venue_1} this is the fourth artist appearing on day three for venue 1\n", f"{fifth_artist_day_3_venue_1} this is the fifth artist appearing on day three for venue 1\n", f"{sixth_artist_day_3_venue_1} this is the sixth/last artist appearing on day three for venue 1\n", f"{first_artist_day_1_venue_2} this is the first artist appearing on day one for venue 2\n", f"{second_artist_day_1_venue_2} this is the second artist appearing on day one for venue 2\n", f"{third_artist_day_1_venue_2} this is the third artist appearing on day one for venue 2\n", f"{fourth_artist_day_1_venue_2} this is the fourth artist appearing on day one for venue 2\n", f"{fifth_artist_day_1_venue_2} this is the fifth artist appearing on day one for venue 2\n", f"{sixth_artist_day_1_venue_2} this is the sixth/last artist appearing on day one for venue 2\n", f"{first_artist_day_2_venue_2} this is the first artist appearing on day two for venue 2\n", f"{second_artist_day_2_venue_2} this is the second artist appearing on day two for venue 2\n", f"{third_artist_day_2_venue_2} this is the third artist appearing on day two for venue 2\n", f"{fourth_artist_day_2_venue_2} this is the fourth artist appearing on day two for venue 2\n", f"{fifth_artist_day_2_venue_2} this is the fifth artist appearing on day two for venue 2\n", f"{sixth_artist_day_2_venue_2} this is the sixth/last artist appearing on day two for venue 2\n", f"{first_artist_day_3_venue_2} this is the first artist appearing on day three for venue 2\n", f"{second_artist_day_3_venue_2} this is the second artist appearing on day three for venue 2\n", f"{third_artist_day_3_venue_2} this is the third artist appearing on day three for venue 2\n", f"{fourth_artist_day_3_venue_2} this is the fourth artist appearing on day three for venue 2\n", f"{fifth_artist_day_3_venue_2} this is the fifth artist appearing on day three for venue 2\n", f"{sixth_artist_day_3_venue_2} this is the sixth/last artist appearing on day three for venue 2\n")
     return artist_lineup
 
-main()
+main(list_of_artists, artist_lineup)
