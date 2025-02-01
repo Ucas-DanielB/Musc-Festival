@@ -9,6 +9,32 @@ stage_info = {}
 equipment_lists = {}  
 artist_schedules = {}  
 
+#Max artist function
+def artist_menu(artist_list):
+    while True:
+        print("\nArtist Managment Menu:")
+        print("1. Search for artists")
+        print("2. Add artists(Admin only)")
+        print("3. Remove artists(Admin only)")
+        print("4. Update artist information(Admin only")
+        print("5. Return to main menu")
+        venue_choice = int(input("What do you wish to use (1-5): "))
+        if venue_choice == 1:
+            search_for_artist(artist_name_added, artist_list)
+        elif venue_choice == 2:
+            artist_name_added = str(input("Type the name for the artist you will be adding: "))
+            artist_genre_added = str(input("Type the name of the genre for this artist: "))
+            artist_performance_duration_added = str(input("Just type 'Two Hours' here: "))
+            add_artists(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
+        elif venue_choice == 3:
+            remove_artist(artist_list, artist_name_added)
+        elif venue_choice == 4:
+            update_artist_info(artist_list, artist_name_added, artist_genre_added, artist_performance_duration_added)
+        elif venue_choice == 5:
+            return
+        else:
+            print("Invalid choice")
+
 # adding venue 
 def add_venue():
     if len(venue_names) >= 2:
@@ -209,7 +235,7 @@ def venue_menu():
             print("Invalid choice")
 
 # main function/ menu selection 
-def main():
+def main(artist_lineup):
     while True:
         print("\nWelcome to our music festival!")
         print("1. Open venue menu")
@@ -225,8 +251,10 @@ def main():
         elif choice == 3:
             schedule_menu()
         elif choice == 4:
-            tickets()
-        elif choice== 5:
+            ticket_main()
+        elif choice == 5:
+            artist_lineup(artist_lineup)
+        elif choice == 6:
             break
         else:
             print("Invalid choice")
@@ -237,29 +265,24 @@ def schedule_menu():
     while True:
         print("\nSchedule Managment Menu:")
         print("1. View final schedule")
-        print("2. Schedule an artist(Admin only)")
+        print("2. Schedule an artists(Admin only)")
         print("3. Return to main menu")
         venue_choice = int(input("What do you wish to use (1-3): "))
         if venue_choice == 1:
-            print("\nFinal Festival Schedule:")
-            print(f"{'Day':<10} {'Time':<10} {'Venue':<10} {'Artist':<15} {'Genre'}")
-            print("-" * 60)
-            for venue in venues:
-                for day, time, (artist, genre) in sorted(venues[venue], key=lambda x: (days.index(x[0]), x[1])):
-                    print(f"{day:<10} {time.strftime('%I:%M %p'):<10} {venue:<10} {artist:<15} {genre}")
+            final_schedule()
         elif venue_choice == 2:
             schedule_artist()
+            scheduling_process()
         elif venue_choice == 3:
             return
         else:
-            print("Invalid choice")\
+            print("Invalid choice")
 
 # Daniel code :D 
 # Ticket and Attendee Management System for a Music Festival
 
 # Ticket storage and attendees
-def tickets():
-bought_tikets = {"1-day": 0, "3-day": 0, "vip": 0}
+bought_tickets = {"1-day": 0, "3-day": 0, "vip": 0}
 unbought_tickets = {"1-day": 200, "3-day": 100, "vip": 40}
 attendees = {"people attending total": 340}
 
@@ -351,7 +374,7 @@ def upgrade_ticket():
         print("\nInvalid input. Please enter a valid number.")
 
 # Main function
-def main():
+def ticket_main():
 
     while True:
         print("\n1. View Tickets\n2. Buy Ticket\n3. Refund Ticket\n4. Upgrade Ticket\n5. Exit")
@@ -370,10 +393,6 @@ def main():
             break
         else:
             print("\nInvalid choice. Please try again.")
-
-# Run the program
-if __name__ == "__main__":
-    main()
 
 #Max's Section
 import random
@@ -578,18 +597,20 @@ def schedule_artist():
 
 
 # Scheduling process
-while len(venues["Venue 1"]) + len(venues["Venue 2"]) < len(list_of_artist_for_scheduler):
-   if not schedule_artist():
-       break  # Exit loop if user quits
+def scheduling_process():
+    while len(venues["Venue 1"]) + len(venues["Venue 2"]) < len(list_of_artist_for_scheduler):
+        if not schedule_artist():
+            break  # Exit loop if user quits
 
 
-# Display final schedule
-print("\nFinal Festival Schedule:")
-print(f"{'Day':<10} {'Time':<10} {'Venue':<10} {'Artist':<15} {'Genre'}")
-print("-" * 60)
-for venue in venues:
-   for day, time, (artist, genre) in sorted(venues[venue], key=lambda x: (days.index(x[0]), x[1])):
-       print(f"{day:<10} {time.strftime('%I:%M %p'):<10} {venue:<10} {artist:<15} {genre}")
+# Display final schedule function
+def final_schedule():
+    print("\nFinal Festival Schedule:")
+    print(f"{'Day':<10} {'Time':<10} {'Venue':<10} {'Artist':<15} {'Genre'}")
+    print("-" * 60)
+    for venue in venues:
+        for day, time, (artist, genre) in sorted(venues[venue], key=lambda x: (days.index(x[0]), x[1])):
+            print(f"{day:<10} {time.strftime('%I:%M %p'):<10} {venue:<10} {artist:<15} {genre}")
 
 
 #(Part of Max's Section) Function for making artist lineup
@@ -650,4 +671,4 @@ def artist_lineup(artist_lineup):
     artist_lineup = (f"{first_artist_day_1_venue_1} this is the first artist appearing on day one for venue 1\n", f"{second_artist_day_1_venue_1} this is the second artist appearing on day one for venue 1\n", f"{third_artist_day_1_venue_1} this is the third artist appearing on day one for venue 1\n", f"{fourth_artist_day_1_venue_1} this is the fourth artist appearing on day one for venue 1\n", f"{fifth_artist_day_1_venue_1} this is the fifth artist appearing on day one for venue 1\n", f"{sixth_artist_day_1_venue_1} this is the sixth/last artist appearing on day one for venue 1\n", f"{first_artist_day_2_venue_1} this is the first artist appearing on day two for venue 1\n", f"{second_artist_day_2_venue_1} this is the second artist appearing on day two for venue 1\n", f"{third_artist_day_2_venue_1} this is the third artist appearing on day two for venue 1\n", f"{fourth_artist_day_2_venue_1} this is the fourth artist appearing on day two for venue 1\n", f"{fifth_artist_day_2_venue_1} this is the fifth artist appearing on day two for venue 1\n", f"{sixth_artist_day_2_venue_1} this is the sixth/last artist appearing on day two for venue 1\n", f"{first_artist_day_3_venue_1} this is the first artist appearing on day three for venue 1\n", f"{second_artist_day_3_venue_1} this is the second artist appearing on day three for venue 1\n", f"{third_artist_day_3_venue_1} this is the third artist appearing on day three for venue 1\n", f"{fourth_artist_day_3_venue_1} this is the fourth artist appearing on day three for venue 1\n", f"{fifth_artist_day_3_venue_1} this is the fifth artist appearing on day three for venue 1\n", f"{sixth_artist_day_3_venue_1} this is the sixth/last artist appearing on day three for venue 1\n", f"{first_artist_day_1_venue_2} this is the first artist appearing on day one for venue 2\n", f"{second_artist_day_1_venue_2} this is the second artist appearing on day one for venue 2\n", f"{third_artist_day_1_venue_2} this is the third artist appearing on day one for venue 2\n", f"{fourth_artist_day_1_venue_2} this is the fourth artist appearing on day one for venue 2\n", f"{fifth_artist_day_1_venue_2} this is the fifth artist appearing on day one for venue 2\n", f"{sixth_artist_day_1_venue_2} this is the sixth/last artist appearing on day one for venue 2\n", f"{first_artist_day_2_venue_2} this is the first artist appearing on day two for venue 2\n", f"{second_artist_day_2_venue_2} this is the second artist appearing on day two for venue 2\n", f"{third_artist_day_2_venue_2} this is the third artist appearing on day two for venue 2\n", f"{fourth_artist_day_2_venue_2} this is the fourth artist appearing on day two for venue 2\n", f"{fifth_artist_day_2_venue_2} this is the fifth artist appearing on day two for venue 2\n", f"{sixth_artist_day_2_venue_2} this is the sixth/last artist appearing on day two for venue 2\n", f"{first_artist_day_3_venue_2} this is the first artist appearing on day three for venue 2\n", f"{second_artist_day_3_venue_2} this is the second artist appearing on day three for venue 2\n", f"{third_artist_day_3_venue_2} this is the third artist appearing on day three for venue 2\n", f"{fourth_artist_day_3_venue_2} this is the fourth artist appearing on day three for venue 2\n", f"{fifth_artist_day_3_venue_2} this is the fifth artist appearing on day three for venue 2\n", f"{sixth_artist_day_3_venue_2} this is the sixth/last artist appearing on day three for venue 2\n")
     return artist_lineup
 
-
+main()
